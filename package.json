@@ -1,0 +1,25 @@
+{
+  "name": "cogen-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ls",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.0",
+    "nock": "^8.0.0",
+    "restler-bluebird": "^0.2.2",
+    "utility": "^1.8.0",
+
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "express": "~4.13.1",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0"
+  }
+}
