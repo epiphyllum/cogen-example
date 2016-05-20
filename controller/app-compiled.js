@@ -30,43 +30,39 @@ var restler = require('restler-bluebird');
 var co = require('co');
 var service = require('./nock/mock_service');
 
-// 
-app.get('/complex', function(req, res){
-   console.log("complex get called!!!");
-    //restler.setHeader("Content-type","application/json")
-   var flow = function*() {
-        var all = yield Promise.all([
-            restler.get('http://localhost:3000/a'),
-            restler.get('http://localhost:3000/b'),
-            restler.get('http://localhost:3000/op')]
-        );
+//
+app.get('/complex', function (req, res) {
+  console.log("complex get called!!!");
+  //restler.setHeader("Content-type","application/json")
+  var flow = function* () {
+    var all = yield Promise.all([restler.get('http://localhost:3000/a'), restler.get('http://localhost:3000/b'), restler.get('http://localhost:3000/op')]);
 
-        console.dir(all);   // ok!!!!!
+    console.dir(all); // ok!!!!!
 
-        var c;
-        if ( all[2].op == 'sub') {
-            c = yield restler.postJson('http://localhost:3000/sub', { a: all[0].a, b: all[1].b});
-        } else {
-            console.log("here called");
-            c = yield restler.postJson('http://localhost:3000/add', {a: all[0].a, b: all[1].b});
-            //c = yield restler.get('http://localhost:3000/add');
-        }
-
-        var vm = {
-          a: all[0].a,
-          b: all[1].b,
-          c: c.c,
-          op:all[2].op 
-        };
-        console.dir(vm);
-
-        res.json(vm);
+    var c;
+    if (all[2].op == 'sub') {
+      c = yield restler.postJson('http://localhost:3000/sub', { a: all[0].a, b: all[1].b });
+    } else {
+      console.log("here called");
+      c = yield restler.postJson('http://localhost:3000/add', { a: all[0].a, b: all[1].b });
+      //c = yield restler.get('http://localhost:3000/add');
     }
-    co(flow);  
+
+    var vm = {
+      a: all[0].a,
+      b: all[1].b,
+      c: c.c,
+      op: all[2].op
+    };
+    console.dir(vm);
+
+    res.json(vm);
+  };
+  co(flow);
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -77,7 +73,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -88,7 +84,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
@@ -96,5 +92,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 module.exports = app;
+
+//# sourceMappingURL=app-compiled.js.map
