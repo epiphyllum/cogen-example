@@ -32,24 +32,17 @@ var service = require('./nock/mock_service');
 
 // 
 app.get('/complex', function(req, res){
-   console.log("complex get called!!!");
-    //restler.setHeader("Content-type","application/json")
    var flow = function*() {
         var all = yield Promise.all([
             restler.get('http://localhost:3000/a'),
             restler.get('http://localhost:3000/b'),
             restler.get('http://localhost:3000/op')]
         );
-
-        console.dir(all);   // ok!!!!!
-
         var c;
         if ( all[2].op == 'sub') {
             c = yield restler.postJson('http://localhost:3000/sub', { a: all[0].a, b: all[1].b});
         } else {
-            console.log("here called");
             c = yield restler.postJson('http://localhost:3000/add', {a: all[0].a, b: all[1].b});
-            //c = yield restler.get('http://localhost:3000/add');
         }
 
         var vm = {
